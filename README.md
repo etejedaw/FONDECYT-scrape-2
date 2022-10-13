@@ -1,2 +1,3 @@
-# FONDECYT-scrape-2
-Web Scraping de datos para el cálculo de resiliencia comunitaria en dimensiones comunitarias e institucionales para el modelo CORE
+# Software de extracción de datos para proyecto FONDECYT
+
+## Resiliencia comunitaria ante tsunami en la costa chilena: Modelando escenarios multidimensionales con una aproximación participativa
