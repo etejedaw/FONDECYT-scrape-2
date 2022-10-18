@@ -3,8 +3,8 @@ import * as dotenv from "dotenv";
 import ConfigEnum from "./config.enum";
 dotenv.config();
 
-class Index {
-	readonly #envConfig: ConfigInterface;
+class Config implements ConfigInterface {
+	readonly #envConfig: { [key: string]: string };
 
 	constructor() {
 		this.#envConfig = {
@@ -21,4 +21,4 @@ class Index {
 	}
 }
 
-export default Index;
+export default Config;

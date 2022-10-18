@@ -1,5 +1,7 @@
+import ConfigEnum from "./config.enum";
+
 interface ConfigInterface {
-	[key: string]: string;
+	get: (key: ConfigEnum) => string;
 }
 
 export default ConfigInterface;
