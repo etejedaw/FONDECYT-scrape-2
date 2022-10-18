@@ -1,14 +1,14 @@
 import mongoose from "mongoose";
-import Database from "./interfaces/database.interface";
-import MongodbInterface from "./interfaces/mongodb.interface";
+import DatabaseInterface from "./interfaces/database.interface";
+import MongoDbInterface from "./interfaces/mongodb.interface";
 
-class MongoDb implements Database {
+class MongoDb implements DatabaseInterface {
 	readonly #DB_USERNAME: string;
 	readonly #DB_PASSWORD: string;
 	readonly #DB_HOST: string;
 	readonly #DB_PORT: string;
 
-	constructor(environment: MongodbInterface) {
+	constructor(environment: MongoDbInterface) {
 		this.#DB_USERNAME = environment.DB_USERNAME;
 		this.#DB_PASSWORD = environment.DB_PASSWORD;
 		this.#DB_HOST = environment.DB_HOST;

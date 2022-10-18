@@ -1,7 +1,7 @@
-interface Database {
+interface DatabaseInterface {
 	getConnectionString: () => string;
 	connect: () => Promise<void>;
 	disconnect: () => Promise<void>;
 }
 
-export default Database;
+export default DatabaseInterface;
