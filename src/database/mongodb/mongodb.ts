@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import DatabaseInterface from "./interfaces/database.interface";
-import MongoDbInterface from "./interfaces/mongodb.interface";
+import DatabaseInterface from "./database.interface";
+import MongoDbInterface from "./mongodb.interface";
 
 class MongoDb implements DatabaseInterface {
 	readonly #DB_USERNAME: string;

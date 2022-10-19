@@ -12,7 +12,8 @@ class Config implements ConfigInterface {
 			DB_HOST: process.env.DB_HOST ?? "127.0.0.1",
 			DB_PORT: process.env.DB_PORT ?? "27017",
 			DB_USERNAME: process.env.DB_USERNAME ?? "root",
-			DB_PASSWORD: process.env.DB_PASSWORD ?? "toor"
+			DB_PASSWORD: process.env.DB_PASSWORD ?? "toor",
+			NODE_ENV: process.env.NODE_ENV ?? "development"
 		};
 	}
 
