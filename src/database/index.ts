@@ -1,3 +1,3 @@
-import MongoDb from "./mongodb";
+import MongoDb from "./mongodb/mongodb";
 
 export { MongoDb };
