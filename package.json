@@ -4,7 +4,7 @@
   "description": "Resiliencia comunitaria ante tsunami en la costa chilena: Modelando escenarios multidimensionales con una aproximación participativa",
   "main": "index.js",
   "scripts": {
-    "build": "tsc -p",
+    "build": "tsc -p .",
     "start": "ts-node src/app.ts",
     "start:prod": "node dist/app.js",
     "dev": "nodemon -w './**/*.ts' --exec 'ts-node' src/app.ts",
