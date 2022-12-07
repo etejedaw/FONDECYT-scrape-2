@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import DatabaseInterface from "./database.interface";
+import DatabaseInterface from "../database.interface";
 import MongoDbInterface from "./mongodb.interface";
 
 class MongoDb implements DatabaseInterface {

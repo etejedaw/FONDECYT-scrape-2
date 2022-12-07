@@ -1,4 +1,4 @@
-import LoggerInterface from "./logger.interface";
+import LoggerInterface from "../logger.interface";
 import winston from "winston";
 import { AbstractConfigSetLevels } from "winston/lib/winston/config";
 
