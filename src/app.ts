@@ -1,7 +1,7 @@
-import Server from "./Server";
+import Server from "./api/Server";
 import { MongoDb } from "./database/";
 import Config from "./config/config";
-import Winston from "./helpers/logger/winston/winston";
+import Winston from "./helpers/logger/winston";
 
 async function main(): Promise<void> {
 	const config = new Config();
