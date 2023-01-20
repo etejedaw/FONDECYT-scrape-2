@@ -37,10 +37,3 @@ class DataSocial {
 }
 
 export default DataSocial;
-
-/*
- * const dataSocial = new DataSocial("www...")
- * dataSocial.search() // pobreza por ingresos <>pobreza multidimensional
- * dataSocial.get("pobreza por ingresos") // xml
- * dataSocial.find("pobreza por ingresos") // true
- */
