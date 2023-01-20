@@ -2,9 +2,11 @@ import { Getter, HtmlExtractor } from "../../helpers/htmlExtractor";
 import Scraper from "./Scraper";
 import Output from "./Output";
 
-class DataSocial {
+class ObservatorioSocial {
 	readonly #url: string;
 	readonly #extractor: HtmlExtractor;
+	readonly #BASE_URL = "http://observatorio.ministeriodesarrollosocial.gob.cl/";
+
 	constructor(url: string, extractor: HtmlExtractor) {
 		this.#url = this.#checkUrl(url);
 		this.#extractor = extractor;
@@ -14,7 +16,7 @@ class DataSocial {
 		const getter = await Getter.build(this.#url, this.#extractor);
 		const html = getter.html;
 		if (!html) return;
-		const scraper = new Scraper(html);
+		const scraper = new Scraper(html, this.#BASE_URL);
 		return scraper.getData();
 	}
 
@@ -27,13 +29,12 @@ class DataSocial {
 	}
 
 	#checkUrl(url: string): string {
-		const BASE_URL = "https://datasocial.ministeriodesarrollosocial.gob.cl/";
-		const baseUrl = new URL(BASE_URL);
+		const baseUrl = new URL(this.#BASE_URL);
 		const inputUrl = new URL(url);
 		if (baseUrl.origin !== inputUrl.origin)
-			throw new Error("Input url does not match DataSocial url");
+			throw new Error("Input url does not match ObervatorioSocial url");
 		return url;
 	}
 }
 
-export default DataSocial;
+export default ObservatorioSocial;
