@@ -1,7 +1,9 @@
 interface Output {
 	title: string;
 	link: string;
-	format: "xlsx";
+	format: Format;
 }
+
+type Format = "xlsx";
 
 export default Output;

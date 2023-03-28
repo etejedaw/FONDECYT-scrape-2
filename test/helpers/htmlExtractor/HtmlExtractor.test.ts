@@ -2,7 +2,7 @@ import {
 	RequestPromise,
 	Puppeteer,
 	Getter
-} from "../../../src/helpers/htmlExtractor";
+} from "../../../src/libs/htmlExtractor";
 
 const url = "https://reactnativetutorial.net/css-selectors/";
 const regex = /<html>(.*?)<\/html>/gs;
