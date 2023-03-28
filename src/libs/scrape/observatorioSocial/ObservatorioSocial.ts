@@ -1,4 +1,4 @@
-import { Getter, HtmlExtractor } from "../../../helpers/htmlExtractor";
+import { Getter, HtmlExtractor } from "../../htmlExtractor";
 import Scraper from "./Scraper";
 import Output from "../output.interface";
 
