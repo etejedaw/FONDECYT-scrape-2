@@ -1,5 +1,5 @@
 import cheerio from "cheerio";
-import Output from "./Output";
+import Output from "../output.interface";
 
 class Scraper {
 	readonly #html: string;
@@ -12,11 +12,21 @@ class Scraper {
 		const $ = cheerio.load(this.#html);
 		return $("nav .nav .text-white a")
 			.map((idx, elem) => {
-				const title = $(elem).attr("title");
-				const link = $(elem).attr("href");
-				return { title, link };
+				const title = $(elem).attr("title") || "";
+				const link = $(elem).attr("href") || "";
+				const output: Output = {
+					title,
+					link,
+					format: "xlsx"
+				};
+				return output;
 			})
-			.get();
+			.get()
+			.filter(output => this.#existOutput(output));
+	}
+
+	#existOutput(output: Partial<Output>): boolean {
+		return Boolean(output.title) && Boolean(output.format);
 	}
 }
 

@@ -1,6 +1,6 @@
-import { Getter, HtmlExtractor } from "../../helpers/htmlExtractor";
+import { Getter, HtmlExtractor } from "../../../helpers/htmlExtractor";
 import Scraper from "./Scraper";
-import Output from "./Output";
+import Output from "../output.interface";
 
 class DataSocial {
 	readonly #url: string;
