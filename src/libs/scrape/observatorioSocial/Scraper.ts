@@ -1,5 +1,5 @@
 import cheerio from "cheerio";
-import Output from "./Output";
+import Output from "../output.interface";
 
 class Scraper {
 	readonly #html: string;
@@ -18,9 +18,19 @@ class Scraper {
 				const title = $(tds[1]).text().trim();
 				const href = $(tds[2]).find("a").attr("href")?.trim() ?? "";
 				const link = `${this.#baseUrl}${href}`;
-				return { title, link };
+				const output: Output = {
+					title,
+					link,
+					format: "xlsx"
+				};
+				return output;
 			})
-			.get();
+			.get()
+			.filter(output => this.#existOutput(output));
+	}
+
+	#existOutput(output: Partial<Output>): boolean {
+		return Boolean(output.title) && Boolean(output.format);
 	}
 }
 
