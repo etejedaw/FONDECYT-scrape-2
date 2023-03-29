@@ -1,10 +1,11 @@
 import { Getter, HtmlExtractor } from "../../htmlExtractor";
 import Scraper from "./Scraper";
-import Output from "../output.interface";
+import Output from "../Output";
 
 class DataSocial {
 	readonly #url: string;
 	readonly #extractor: HtmlExtractor;
+
 	constructor(url: string, extractor: HtmlExtractor) {
 		this.#url = this.#checkUrl(url);
 		this.#extractor = extractor;

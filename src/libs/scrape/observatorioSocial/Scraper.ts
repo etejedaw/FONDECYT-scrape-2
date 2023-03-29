@@ -1,5 +1,5 @@
 import cheerio from "cheerio";
-import Output from "../output.interface";
+import Output from "../Output";
 
 class Scraper {
 	readonly #html: string;

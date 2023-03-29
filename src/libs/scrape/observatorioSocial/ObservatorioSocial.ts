@@ -1,6 +1,6 @@
 import { Getter, HtmlExtractor } from "../../htmlExtractor";
 import Scraper from "./Scraper";
-import Output from "../output.interface";
+import Output from "../Output";
 
 class ObservatorioSocial {
 	readonly #url: string;
