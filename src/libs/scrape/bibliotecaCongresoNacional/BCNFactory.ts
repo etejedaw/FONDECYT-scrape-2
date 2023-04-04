@@ -2,7 +2,7 @@ import BCNTypes from "./BCNTypes";
 import EstadisticasTerritoriales from "./EstadisticasTerritoriales";
 import ReporteComunal from "./ReporteComunal";
 
-function BCNFactory(type: BCNTypes): Function {
+function BCNFactory(type: BCNTypes): returnTypeBCN {
 	switch (type) {
 		case BCNTypes.ESTADISTICA_TERRITORIAL:
 			return EstadisticasTerritoriales;
@@ -12,5 +12,7 @@ function BCNFactory(type: BCNTypes): Function {
 			throw new Error("Bad option. Please use BCNType");
 	}
 }
+
+type returnTypeBCN = typeof EstadisticasTerritoriales | typeof ReporteComunal;
 
 export default BCNFactory;
