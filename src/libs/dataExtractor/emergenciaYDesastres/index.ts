@@ -1,3 +1,3 @@
-import EmergenciaYDesastres from "./emergenciaYDesastres";
+import EmergenciaYDesastres from "./EmergenciaYDesastres";
 
 export { EmergenciaYDesastres };
