@@ -1,3 +1,4 @@
 import MongoDb from "./mongodb/mongodb";
+import ConnectionError from "./mongodb/connection.error";
 
-export { MongoDb };
+export { ConnectionError, MongoDb };

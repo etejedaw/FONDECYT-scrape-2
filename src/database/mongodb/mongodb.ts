@@ -1,6 +1,7 @@
-import mongoose from "mongoose";
+import mongoose, { Error } from "mongoose";
 import DatabaseInterface from "../database.interface";
 import MongoDbInterface from "./mongodb.interface";
+import ConnectionError from "./connection.error";
 
 class MongoDb implements DatabaseInterface {
 	readonly #DB_USERNAME: string;
@@ -22,8 +23,14 @@ class MongoDb implements DatabaseInterface {
 	}
 
 	async connect(): Promise<void> {
-		const uri = this.getConnectionString();
-		await mongoose.connect(uri);
+		try {
+			const uri = this.getConnectionString();
+			await mongoose.connect(uri);
+		} catch (error) {
+			if (error instanceof Error.MongooseServerSelectionError)
+				throw new ConnectionError(error.message);
+			throw error;
+		}
 	}
 
 	async disconnect(): Promise<void> {
