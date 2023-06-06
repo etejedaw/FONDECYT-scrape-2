@@ -2,6 +2,7 @@ import Server from "./api/Server";
 import { MongoDb } from "./database/";
 import Config from "./config/config";
 import Winston from "./helpers/logger/winston";
+import { ConnectionError } from "./database";
 
 async function main(): Promise<void> {
 	const config = new Config();
@@ -22,7 +23,9 @@ async function main(): Promise<void> {
 		await mongoDb.connect();
 		winston.info(`Database connected on port ${config.get("DB_PORT")}`);
 	} catch (error) {
-		console.log(error);
+		if (error instanceof ConnectionError)
+			winston.error(error.name, error.detail);
+		else console.log(error);
 	}
 }
 
