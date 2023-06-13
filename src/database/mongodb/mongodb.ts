@@ -2,6 +2,8 @@ import mongoose, { Error } from "mongoose";
 import DatabaseInterface from "../database.interface";
 import MongoDbInterface from "./mongodb.interface";
 import ConnectionError from "./connection.error";
+import { MongoError } from "mongodb";
+import AuthError from "./auth.error";
 
 class MongoDb implements DatabaseInterface {
 	readonly #DB_USERNAME: string;
@@ -30,6 +32,7 @@ class MongoDb implements DatabaseInterface {
 		} catch (error) {
 			if (error instanceof Error.MongooseServerSelectionError)
 				throw new ConnectionError(error.message);
+			if (error instanceof MongoError) throw new AuthError(error.message);
 			throw error;
 		}
 	}

@@ -2,7 +2,7 @@ import Server from "./api/Server";
 import { MongoDb } from "./database/";
 import Config from "./config/config";
 import Winston from "./helpers/logger/winston";
-import { ConnectionError } from "./database";
+import { AuthError, ConnectionError } from "./database";
 
 async function main(): Promise<void> {
 	const config = new Config();
@@ -25,6 +25,7 @@ async function main(): Promise<void> {
 	} catch (error) {
 		if (error instanceof ConnectionError)
 			winston.error(error.name, error.detail);
+		if (error instanceof AuthError) winston.error(error.name, error.detail);
 		else console.log(error);
 	}
 }
