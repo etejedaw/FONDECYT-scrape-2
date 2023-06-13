@@ -25,6 +25,7 @@ class MongoDb implements DatabaseInterface {
 	async connect(): Promise<void> {
 		try {
 			const uri = this.getConnectionString();
+			mongoose.set("strictQuery", true);
 			await mongoose.connect(uri);
 		} catch (error) {
 			if (error instanceof Error.MongooseServerSelectionError)
