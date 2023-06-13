@@ -1,5 +1,6 @@
 interface Output {
 	title: string;
+	code?: string;
 	link: string;
 	format: Format;
 }

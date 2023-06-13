@@ -20,10 +20,10 @@ class ObservatorioSocial {
 		return scraper.getData();
 	}
 
-	async getByTitle(title: string): Promise<Output | undefined> {
+	async getByCode(code: string): Promise<Output | undefined> {
 		const allData = await this.search();
 		if (!allData) return;
-		const data = allData.find(data => data.title === title.trim());
+		const data = allData.find(data => data.code === code.trim());
 		if (!data) return;
 		return data;
 	}
