@@ -17,6 +17,14 @@ async function downloadFile(url: string, path: string): Promise<void> {
 	}
 }
 
+function deleteFile(path: string): void {
+	try {
+		fs.unlinkSync(path);
+	} catch (error) {
+		console.log(error);
+	}
+}
+
 function createTmpDirectory(directory: string): void {
 	const arrayPath = directory.split("/");
 	arrayPath.pop();
@@ -24,4 +32,4 @@ function createTmpDirectory(directory: string): void {
 	if (!fs.existsSync(path)) fs.mkdirSync(path);
 }
 
-export default downloadFile;
+export { downloadFile, deleteFile };

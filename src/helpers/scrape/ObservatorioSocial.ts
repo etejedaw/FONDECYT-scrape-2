@@ -1,7 +1,8 @@
 import { HtmlExtractor } from "../../libs/htmlExtractor";
 import { ObservatorioSocial as ObSo } from "../../libs/dataExtractor";
 import * as path from "path";
-import downloadFile from "../downloadFile.helpers";
+import { deleteFile, downloadFile } from "../downloadFile.helpers";
+import XLSX from "xlsx";
 
 class ObservatorioSocial {
 	readonly #url: string[];
@@ -16,7 +17,7 @@ class ObservatorioSocial {
 		const data = await this.#getData(code);
 		if (!data) return [];
 		if (code.includes("prevision-social")) {
-			await this.#extractPrevisionSocial(data.link);
+			return await this.#extractPrevisionSocial(data.link);
 		}
 	}
 
@@ -42,6 +43,32 @@ class ObservatorioSocial {
 		const fileName = `${this.#generateFileName()}.xlsx`;
 		const destination = path.resolve(__dirname, "../../../tmp", fileName);
 		await downloadFile(url, destination);
+
+		const workbook = XLSX.readFile(destination);
+		const page = "1";
+		const sheet = workbook.Sheets[page];
+		const data: any[][] = XLSX.utils.sheet_to_json(sheet, {
+			header: 1,
+			range: 4
+		});
+		const rawData = data
+			.map(arr => arr.slice(1, 14))
+			.filter(arr => arr.length !== 0);
+
+		const [keys, ...values] = rawData;
+		const result = values.map(value =>
+			Object.fromEntries(keys.map((key, index) => [key, value[index]]))
+		);
+
+		deleteFile(destination);
+		return {
+			result,
+			meta: {
+				title:
+					"Número y porcentaje de población en edad de trabajar (1990-2017)",
+				detail: "ESTIMACIÓN"
+			}
+		};
 	}
 
 	#generateFileName(): string {
