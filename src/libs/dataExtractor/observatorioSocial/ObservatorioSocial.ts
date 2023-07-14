@@ -5,7 +5,8 @@ import Output from "../Output";
 class ObservatorioSocial {
 	readonly #url: string;
 	readonly #extractor: HtmlExtractor;
-	readonly #BASE_URL = "http://observatorio.ministeriodesarrollosocial.gob.cl/";
+	readonly #BASE_URL =
+		"https://observatorio.ministeriodesarrollosocial.gob.cl/";
 
 	constructor(url: string, extractor: HtmlExtractor) {
 		this.#url = this.#checkUrl(url);
