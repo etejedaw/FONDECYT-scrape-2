@@ -15,6 +15,7 @@ class ObservatorioSocial {
 
 	async init(code: string): Promise<any> {
 		const data = await this.#getData(code);
+
 		if (!data) return [];
 		if (code.includes("prevision-social")) {
 			return await this.#extractPrevisionSocial(data.link);
