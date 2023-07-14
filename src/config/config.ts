@@ -16,7 +16,7 @@ class Config {
 		};
 	}
 
-	get(key: keyof ConfigInterface): string {
+	get<TKey extends keyof ConfigInterface>(key: TKey): string {
 		return this.#envConfig[key];
 	}
 }
