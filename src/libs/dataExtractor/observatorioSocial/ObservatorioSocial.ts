@@ -5,7 +5,8 @@ import Output from "../Output";
 class ObservatorioSocial {
 	readonly #url: string;
 	readonly #extractor: HtmlExtractor;
-	readonly #BASE_URL = "http://observatorio.ministeriodesarrollosocial.gob.cl/";
+	readonly #BASE_URL =
+		"https://observatorio.ministeriodesarrollosocial.gob.cl/";
 
 	constructor(url: string, extractor: HtmlExtractor) {
 		this.#url = this.#checkUrl(url);
@@ -20,10 +21,10 @@ class ObservatorioSocial {
 		return scraper.getData();
 	}
 
-	async getByTitle(title: string): Promise<Output | undefined> {
+	async getByCode(code: string): Promise<Output | undefined> {
 		const allData = await this.search();
 		if (!allData) return;
-		const data = allData.find(data => data.title === title.trim());
+		const data = allData.find(data => data.code === code.trim());
 		if (!data) return;
 		return data;
 	}

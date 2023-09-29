@@ -1,5 +1,6 @@
 import cheerio from "cheerio";
 import Output from "../Output";
+import slug from "slug";
 
 class Scraper {
 	readonly #html: string;
@@ -20,6 +21,7 @@ class Scraper {
 				const link = `${this.#baseUrl}${href}`;
 				const output: Output = {
 					title,
+					code: slug(title),
 					link,
 					format: "xlsx"
 				};
