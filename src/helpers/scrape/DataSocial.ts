@@ -11,7 +11,11 @@ class DataSocial {
 	}
 
 	async init(): Promise<any> {
-		return await this.#getData();
+		const data = await this.#getData();
+		return {
+			data,
+			messsage: "DataSocial no implementado debido a lo cambiante que es su web"
+		};
 	}
 
 	async #getData(): Promise<any> {
