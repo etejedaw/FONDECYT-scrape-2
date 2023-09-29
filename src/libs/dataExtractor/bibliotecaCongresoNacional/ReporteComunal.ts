@@ -11,12 +11,17 @@ class ReporteComunal {
 		this.#extractor = extractor;
 	}
 
-	async search(): Promise<Output[] | undefined> {
+	async search(): Promise<any> {
 		const getter = await Getter.build(this.#url, this.#extractor);
 		const html = getter.html;
 		if (!html) return;
 		const scraper = new Scraper(html, this.#url);
-		return scraper.getOSData();
+		const data = scraper.getOSData();
+		return {
+			data,
+			message:
+				"Debido a lo variante que puede ser cada url generada, se optó por no implementar esta extracción"
+		};
 	}
 
 	#checkUrl(url: string): string {

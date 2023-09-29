@@ -18,7 +18,7 @@ class Scraper {
 				const output: Output = {
 					title,
 					link: this.#transformEtUrl(this.#url),
-					format: "html"
+					format: "json"
 				};
 				return output;
 			})
@@ -33,7 +33,7 @@ class Scraper {
 				const output: Output = {
 					title,
 					link: this.#transformOSUrl(this.#url),
-					format: "json"
+					format: "html"
 				};
 				return output;
 			})
