@@ -4,40 +4,40 @@ import {
 	EmergenciaYDesastres as EyDData
 } from "../../libs/dataExtractor";
 import cheerio from "cheerio";
-import ScrapeData from "./ScrapeData";
+import { ReturnData, ScrapeBase } from "./ScrapeBase";
 
-class EmergenciaYDesastres {
-	readonly #url: string[];
-	readonly #extractor: HtmlExtractor;
-
+class EmergenciaYDesastres extends ScrapeBase<dataType> {
 	constructor(url: string[] | string, extractor: HtmlExtractor) {
-		this.#url = this.#normalizeUrl(url);
-		this.#extractor = extractor;
+		super(url, extractor);
 	}
 
-	async init(): Promise<EmergenciaYDesastresData[]> {
-		const data = await this.#getData();
-		const cleanData = data.filter(Boolean);
-		if (cleanData.length === 0) return [];
-		const promises = cleanData.map(data => this.#scrape(data));
+	async init(): Promise<Array<ReturnData<dataType>>> {
+		const data = await this.getData();
+		if (data.length === 0) this.errorEmptyUrl();
+		const promises = data.map(async data => await this.scrape(data));
 		const extractData = await Promise.all(promises);
-		if (extractData.filter(Boolean).length === 0) return [];
-		return extractData.filter(Boolean);
+		const dataFiltered = extractData.filter(Boolean);
+		if (dataFiltered.length === 0) this.errorEmptyExtract();
+		return dataFiltered;
 	}
 
-	async #getData(): Promise<Array<Output | undefined>> {
-		const emergenciaYDesastres = this.#url.map(
-			url => new EyDData(url, this.#extractor)
+	async getData(): Promise<Output[]> {
+		const emergenciaYDesastres = this.url.map(
+			url => new EyDData(url, this.extractor)
 		);
-		const promises = emergenciaYDesastres.map(data => data.search());
+		const promises = emergenciaYDesastres.map(
+			async data => await data.search()
+		);
 		const data = await Promise.all(promises);
-		return data.flat();
+		return data.flat().filter(Boolean);
 	}
 
-	async #scrape(output: Output): Promise<EmergenciaYDesastresData | undefined> {
-		const getter = await Getter.build(output.link, this.#extractor);
+	async scrape(output: Output): Promise<ReturnData<dataType>> {
+		const getter = await Getter.build(output.link, this.extractor);
+
 		const html = getter.html;
-		if (!html) return;
+		if (!html) return { metadata: output };
+
 		const $ = cheerio.load(html);
 		const data: dataType[] = $(".back-fechas .item .card")
 			.map((idx, elem) => {
@@ -57,11 +57,11 @@ class EmergenciaYDesastres {
 				return { date, place };
 			})
 			.get();
-		return { data, output };
-	}
 
-	#normalizeUrl(url: string[] | string): string[] {
-		return typeof url === "string" ? [url] : url;
+		return {
+			scrape: data,
+			metadata: output
+		};
 	}
 }
 
@@ -75,10 +75,6 @@ interface dataType {
 		type: string;
 		city: string;
 	};
-}
-interface EmergenciaYDesastresData extends ScrapeData<dataType> {
-	data: dataType[];
-	output: Output;
 }
 
 export default EmergenciaYDesastres;
