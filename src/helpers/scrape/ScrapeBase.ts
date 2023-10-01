@@ -10,9 +10,9 @@ export abstract class ScrapeBase<ScrapeData> {
 		this.#extractor = extractor;
 	}
 
-	abstract init(): Promise<Array<ReturnData<ScrapeData>>>;
+	abstract init(): ArrayData<ScrapeData>;
 	abstract getData(): Promise<Output[]>;
-	abstract scrape(output: Output): Promise<ReturnData<ScrapeData>>;
+	abstract scrape(output: Output): Data<ScrapeData>;
 
 	#toArray(url: string[] | string): string[] {
 		return Array.isArray(url) ? url : [url];
@@ -34,6 +34,9 @@ export abstract class ScrapeBase<ScrapeData> {
 		return this.#extractor;
 	}
 }
+
+export type Data<ScrapeData> = Promise<ReturnData<ScrapeData>>;
+export type ArrayData<ScrapeData> = Promise<Array<ReturnData<ScrapeData>>>;
 
 export interface ReturnData<ScrapeData> {
 	scrape?: ScrapeData[];
