@@ -4,14 +4,14 @@ import {
 	EmergenciaYDesastres as EyDData
 } from "../../libs/dataExtractor";
 import cheerio from "cheerio";
-import { ReturnData, ScrapeBase } from "./ScrapeBase";
+import { ArrayData, Data, ScrapeBase } from "./ScrapeBase";
 
-class EmergenciaYDesastres extends ScrapeBase<dataType> {
+class EmergenciaYDesastres extends ScrapeBase<DataType> {
 	constructor(url: string[] | string, extractor: HtmlExtractor) {
 		super(url, extractor);
 	}
 
-	async init(): Promise<Array<ReturnData<dataType>>> {
+	async init(): ArrayData<DataType> {
 		const data = await this.getData();
 		if (data.length === 0) this.errorEmptyUrl();
 		const promises = data.map(async data => await this.scrape(data));
@@ -32,17 +32,17 @@ class EmergenciaYDesastres extends ScrapeBase<dataType> {
 		return data.flat().filter(Boolean);
 	}
 
-	async scrape(output: Output): Promise<ReturnData<dataType>> {
+	async scrape(output: Output): Data<DataType> {
 		const getter = await Getter.build(output.link, this.extractor);
 
 		const html = getter.html;
 		if (!html) return { metadata: output };
 
 		const $ = cheerio.load(html);
-		const data: dataType[] = $(".back-fechas .item .card")
+		const data: DataType[] = $(".back-fechas .item .card")
 			.map((idx, elem) => {
 				const dateElem = $(elem).find(".caja-date");
-				const date: dataType["date"] = {
+				const date: DataType["date"] = {
 					day: Number(
 						$(dateElem).find(".dat_day").text().trim().split("\t")[0]
 					),
@@ -50,7 +50,7 @@ class EmergenciaYDesastres extends ScrapeBase<dataType> {
 					year: Number($(dateElem).find(".dat_year").text().trim())
 				};
 				const placeElem = $(elem).find(".card-body");
-				const place: dataType["place"] = {
+				const place: DataType["place"] = {
 					type: $(placeElem).find(".card-title a").text().trim(),
 					city: $(placeElem).find(".card-title.pb-3").text().trim()
 				};
@@ -65,7 +65,7 @@ class EmergenciaYDesastres extends ScrapeBase<dataType> {
 	}
 }
 
-interface dataType {
+interface DataType {
 	date: {
 		day: number;
 		month: string;
