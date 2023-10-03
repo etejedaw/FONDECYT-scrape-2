@@ -1,24 +1,21 @@
 import cheerio from "cheerio";
 import Output from "../Output";
 import slug from "slug";
+import Scraper from "../Scraper";
 
-class Scraper {
-	readonly #html: string;
-	readonly #baseUrl: string;
-
+class ObservatorioSocialScraper extends Scraper {
 	constructor(html: string, baseUrl: string) {
-		this.#html = html;
-		this.#baseUrl = baseUrl;
+		super(html, baseUrl);
 	}
 
 	getData(): Output[] {
-		const $ = cheerio.load(this.#html);
+		const $ = cheerio.load(this.html);
 		return $(".tab-content #estadisticas .table tbody tr")
 			.map((idx, elem) => {
 				const tds = $(elem).find("td");
 				const title = $(tds[1]).text().trim();
 				const href = $(tds[2]).find("a").attr("href")?.trim() ?? "";
-				const link = `${this.#baseUrl}${href}`;
+				const link = `${this.baseUrl}${href}`;
 				const output: Output = {
 					title,
 					code: slug(title),
@@ -36,4 +33,4 @@ class Scraper {
 	}
 }
 
-export default Scraper;
+export default ObservatorioSocialScraper;
