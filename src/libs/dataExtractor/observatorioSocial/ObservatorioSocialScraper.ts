@@ -9,7 +9,7 @@ class ObservatorioSocialScraper extends Scraper {
 	}
 
 	getData(): Output[] {
-		const $ = cheerio.load(this.html);
+		const $ = cheerio.load(this.htmlCode);
 		return $(".tab-content #estadisticas .table tbody tr")
 			.map((idx, elem) => {
 				const tds = $(elem).find("td");
