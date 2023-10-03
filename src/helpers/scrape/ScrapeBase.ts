@@ -10,7 +10,7 @@ export abstract class ScrapeBase<ScrapeData> {
 		this.#extractor = extractor;
 	}
 
-	abstract init(): ArrayData<ScrapeData>;
+	abstract init(code?: string): ArrayData<ScrapeData>;
 	abstract getData(): Promise<Output[]>;
 	abstract scrape(output: Output): Data<ScrapeData>;
 
@@ -24,6 +24,10 @@ export abstract class ScrapeBase<ScrapeData> {
 
 	errorEmptyExtract(): never {
 		throw new Error("No data available to extract");
+	}
+
+	errorEmptyCode(): never {
+		throw new Error("Code not found in init function");
 	}
 
 	get url(): string[] {
