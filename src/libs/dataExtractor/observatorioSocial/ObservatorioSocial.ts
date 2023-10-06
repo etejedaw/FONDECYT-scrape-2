@@ -12,10 +12,12 @@ class ObservatorioSocial extends DataExtractor {
 		this.#url = url;
 	}
 
-	async search(): Promise<Output[] | undefined> {
+	async search(): Promise<Output[]> {
 		const scrape = await this.scraper();
-		if (!scrape) return;
-		return scrape.getData();
+		if (!scrape) return this.emptyHTML(this.#url);
+		const output = scrape.getData();
+		if (output.length === 0) return this.emptyOutput(this.#url);
+		return output;
 	}
 
 	async scraper(): Promise<ObservatorioSocialScraper | undefined> {
