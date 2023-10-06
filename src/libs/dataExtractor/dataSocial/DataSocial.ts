@@ -1,5 +1,5 @@
 import { Getter, HtmlExtractor } from "../../htmlExtractor";
-import Scraper from "./Scraper";
+import DataSocialScraper from "./DataSocialScraper";
 import Output from "../Output";
 
 class DataSocial {
@@ -15,7 +15,7 @@ class DataSocial {
 		const getter = await Getter.build(this.#url, this.#extractor);
 		const html = getter.html;
 		if (!html) return;
-		const scraper = new Scraper(html);
+		const scraper = new DataSocialScraper(html, this.#url);
 		return scraper.getData();
 	}
 
