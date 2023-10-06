@@ -2,6 +2,7 @@ interface Output {
 	title: string;
 	code?: string;
 	link: string;
+	outputLink?: string;
 	format: Format;
 }
 

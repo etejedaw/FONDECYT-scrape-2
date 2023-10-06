@@ -1,5 +1,6 @@
 import { HtmlExtractor } from "../htmlExtractor";
 import Scraper from "./Scraper";
+import Output from "./Output";
 
 abstract class DataExtractor {
 	readonly #baseUrl: string;
@@ -30,12 +31,3 @@ abstract class DataExtractor {
 }
 
 export default DataExtractor;
-
-export interface Output {
-	title: string;
-	code?: string;
-	link: string;
-	format: Format;
-}
-
-type Format = "xlsx" | "json" | "html";
