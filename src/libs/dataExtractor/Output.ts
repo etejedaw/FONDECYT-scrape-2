@@ -6,6 +6,6 @@ interface Output {
 	format: Format;
 }
 
-type Format = "xlsx" | "json" | "html";
+type Format = "xlsx" | "json" | "html" | "error";
 
 export default Output;

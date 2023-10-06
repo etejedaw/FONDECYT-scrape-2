@@ -11,7 +11,7 @@ abstract class DataExtractor {
 		this.#extractor = extractor;
 	}
 
-	abstract search(): Promise<Output[] | undefined>;
+	abstract search(): Promise<Output[]>;
 	abstract scraper(): Promise<Scraper | undefined>;
 
 	isCorrectUrl(url: string): void {
@@ -19,6 +19,27 @@ abstract class DataExtractor {
 		const inputUrl = new URL(url);
 		if (baseUrl.origin !== inputUrl.origin)
 			throw new Error(`Input url does not match with ${this.#baseUrl} url`);
+	}
+
+	emptyHTML(url: string): Output[] {
+		return [
+			{
+				title: "Scraper cant extract HTML. Please update Scraper Method",
+				link: url,
+				format: "error"
+			}
+		];
+	}
+
+	emptyOutput(url: string): Output[] {
+		return [
+			{
+				title:
+					"Scraper cant extract data from HTML. Please update getData function ",
+				link: url,
+				format: "error"
+			}
+		];
 	}
 
 	get baseUrl(): string {
