@@ -7,7 +7,7 @@ abstract class DataExtractor {
 	readonly #extractor: HtmlExtractor;
 
 	protected constructor(baseUrl: string, extractor: HtmlExtractor) {
-		this.#baseUrl = baseUrl;
+		this.#baseUrl = baseUrl.trim();
 		this.#extractor = extractor;
 	}
 
