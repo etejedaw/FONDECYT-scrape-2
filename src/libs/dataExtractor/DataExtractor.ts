@@ -14,6 +14,14 @@ abstract class DataExtractor {
 	abstract search(): Promise<Output[]>;
 	abstract scraper(): Promise<Scraper | undefined>;
 
+	async innerSearch(url: string): Promise<Output[]> {
+		const scrape = await this.scraper();
+		if (!scrape) return this.emptyHTML(url);
+		const output = scrape.getData();
+		if (output.length === 0) return this.emptyOutput(url);
+		return output;
+	}
+
 	isCorrectUrl(url: string): void {
 		const baseUrl = new URL(this.baseUrl);
 		const inputUrl = new URL(url);
