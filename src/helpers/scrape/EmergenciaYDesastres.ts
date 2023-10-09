@@ -12,13 +12,7 @@ class EmergenciaYDesastres extends ScrapeBase<DataType> {
 	}
 
 	async init(): ArrayData<DataType> {
-		const data = await this.getData();
-		if (data.length === 0) this.errorEmptyUrl();
-		const promises = data.map(async data => await this.scrape(data));
-		const extractData = await Promise.all(promises);
-		const dataFiltered = extractData.filter(Boolean);
-		if (dataFiltered.length === 0) this.errorEmptyExtract();
-		return dataFiltered;
+		return await this.innerInit();
 	}
 
 	async getData(): Promise<Output[]> {
