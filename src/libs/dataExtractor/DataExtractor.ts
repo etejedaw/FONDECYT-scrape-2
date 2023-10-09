@@ -32,7 +32,7 @@ abstract class DataExtractor {
 	emptyHTML(url: string): Output[] {
 		return [
 			{
-				title: "Scraper cant extract HTML. Please update Scraper Method",
+				title: "Cant extract HTML. Please update Scraper Method",
 				link: url,
 				format: "error"
 			}
@@ -43,7 +43,7 @@ abstract class DataExtractor {
 		return [
 			{
 				title:
-					"Scraper cant extract data from HTML. Please update getData function ",
+					"Scraper cant extract data from HTML. Please update getData function",
 				link: url,
 				format: "error"
 			}
