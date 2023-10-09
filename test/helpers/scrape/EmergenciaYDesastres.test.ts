@@ -20,6 +20,14 @@ describe("Any scrape in EmergenciaYDesastres must have", () => {
 		expect(Array.isArray(scrapeFirstDataElement)).toBe(true);
 	});
 
+	it("Data without error format", async () => {
+		const data = await emergenciaydesastres.init();
+		const scrapeErrors = data.filter(
+			scrapeData => scrapeData.metadata.format === "error"
+		);
+		expect(scrapeErrors.length).toBe(0);
+	});
+
 	it("All the scrape variables with their own data structure ", async () => {
 		const data = await emergenciaydesastres.init();
 

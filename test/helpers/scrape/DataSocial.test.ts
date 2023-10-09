@@ -19,4 +19,12 @@ describe("Any scrape in DataSocial must have", () => {
 		const scrapeFirstDataElement = firstDataElement.scrape;
 		expect(Array.isArray(scrapeFirstDataElement)).toBe(true);
 	});
+
+	it("Data without error format", async () => {
+		const data = await datasocial.init();
+		const scrapeErrors = data.filter(
+			scrapeData => scrapeData.metadata.format === "error"
+		);
+		expect(scrapeErrors.length).toBe(0);
+	});
 });
