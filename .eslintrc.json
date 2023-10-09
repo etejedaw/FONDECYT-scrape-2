@@ -14,6 +14,7 @@
     "rules": {
         "@typescript-eslint/strict-boolean-expressions": "warn",
         "@typescript-eslint/prefer-nullish-coalescing": "warn",
-        "@typescript-eslint/promise-function-async": "warn"
+        "@typescript-eslint/promise-function-async": "warn",
+        "@typescript-eslint/no-useless-constructor": "warn"
     }
 }
