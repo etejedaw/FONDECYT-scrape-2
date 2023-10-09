@@ -1,4 +1,4 @@
-import EmergenciaYDesastres from "../../../src/helpers/scrape/EmergenciaYDesastres";
+import { EmergenciaYDesastres } from "../../../src/helpers/scrape";
 import RequestPromise from "../../../src/libs/htmlExtractor/requestPromise/RequestPromise";
 
 describe("Any scrape in EmergenciaYDesastres must have", () => {
