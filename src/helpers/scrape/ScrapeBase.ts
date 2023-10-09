@@ -14,6 +14,16 @@ export abstract class ScrapeBase<ScrapeData> {
 	abstract getData(): Promise<Output[]>;
 	abstract scrape(output: Output): Data<ScrapeData>;
 
+	async innerInit(): ArrayData<ScrapeData> {
+		const data = await this.getData();
+		if (data.length === 0) this.errorEmptyUrl();
+		const promises = data.map(data => this.scrape(data));
+		const extractData = await Promise.all(promises);
+		const dataFiltered = extractData.filter(Boolean);
+		if (dataFiltered.length === 0) this.errorEmptyExtract();
+		return dataFiltered;
+	}
+
 	#toArray(url: string[] | string): string[] {
 		return Array.isArray(url) ? url : [url];
 	}
