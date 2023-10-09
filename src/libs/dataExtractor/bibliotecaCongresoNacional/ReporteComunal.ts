@@ -1,36 +1,36 @@
 import { Getter, HtmlExtractor } from "../../htmlExtractor";
+import DataExtractor from "../DataExtractor";
+import ReporteComunalScraper from "./ReporteComunalScraper";
 import Output from "../Output";
-import Scraper from "./Scraper";
 
-class ReporteComunal {
+class ReporteComunal extends DataExtractor {
 	readonly #url: string;
-	readonly #extractor: HtmlExtractor;
 
 	constructor(url: string, extractor: HtmlExtractor) {
-		this.#url = this.#checkUrl(url);
-		this.#extractor = extractor;
+		super("https://www.bcn.cl/siit/reportescomunales", extractor);
+		this.isCorrectUrl(url);
+		this.#url = url;
 	}
 
-	async search(): Promise<any> {
-		const getter = await Getter.build(this.#url, this.#extractor);
+	async search(): Promise<Output[]> {
+		const getter = await Getter.build(this.#url, this.extractor);
+		const html = getter.html;
+		if (!html) return this.emptyHTML(this.#url);
+		const scraper = new ReporteComunalScraper(html, this.#url);
+		return scraper.getData();
+		// return {
+		// 	data,
+		// 	message:
+		// 		"Debido a lo variante que puede ser cada url generada, se optó por no implementar esta extracción"
+		// };
+		// return await this.innerSearch(this.#url)
+	}
+
+	async scraper(): Promise<ReporteComunalScraper | undefined> {
+		const getter = await Getter.build(this.#url, this.extractor);
 		const html = getter.html;
 		if (!html) return;
-		const scraper = new Scraper(html, this.#url);
-		const data = scraper.getOSData();
-		return {
-			data,
-			message:
-				"Debido a lo variante que puede ser cada url generada, se optó por no implementar esta extracción"
-		};
-	}
-
-	#checkUrl(url: string): string {
-		const BASE_URL = "https://www.bcn.cl/siit/reportescomunales";
-		const baseUrl = new URL(BASE_URL);
-		const inputUrl = new URL(url);
-		if (baseUrl.origin !== inputUrl.origin)
-			throw new Error("Input url does not match BCN url");
-		return url;
+		return new ReporteComunalScraper(html, this.#url);
 	}
 }
 

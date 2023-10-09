@@ -1,23 +1,20 @@
 import cheerio from "cheerio";
 import Output from "../Output";
+import Scraper from "../Scraper";
 
-class Scraper {
-	readonly #html: string;
-	readonly #url: string;
-
-	constructor(html: string, url: string) {
-		this.#html = html;
-		this.#url = url;
+class EmergenciaYDesastresScraper extends Scraper {
+	constructor(html: string, baseUrl: string) {
+		super(html, baseUrl);
 	}
 
 	getData(): Output[] {
-		const $ = cheerio.load(this.#html);
+		const $ = cheerio.load(this.htmlCode);
 		return $("main.cd-main-content .container .row .w-100.p-2.tit_seccion.p-4")
 			.map((idx, elem) => {
 				const title = $(elem).find("h2").text() || "";
 				const output: Output = {
 					title,
-					link: this.#url,
+					link: this.baseUrl,
 					format: "html"
 				};
 				return output;
@@ -26,4 +23,4 @@ class Scraper {
 	}
 }
 
-export default Scraper;
+export default EmergenciaYDesastresScraper;

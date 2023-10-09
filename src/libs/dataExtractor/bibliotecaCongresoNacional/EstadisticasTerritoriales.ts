@@ -1,31 +1,26 @@
 import { Getter, HtmlExtractor } from "../../htmlExtractor";
 import Output from "../Output";
-import Scraper from "./Scraper";
+import DataExtractor from "../DataExtractor";
+import EstadisticasTerritorialesScraper from "./EstadisticasTerritorialesScraper";
 
-class EstadisticasTerritoriales {
+class EstadisticasTerritoriales extends DataExtractor {
 	readonly #url: string;
-	readonly #extractor: HtmlExtractor;
 
 	constructor(url: string, extractor: HtmlExtractor) {
-		this.#url = this.#checkUrl(url);
-		this.#extractor = extractor;
+		super("https://www.bcn.cl/siit/estadisticasterritoriales/", extractor);
+		this.isCorrectUrl(url);
+		this.#url = url;
 	}
 
-	async search(): Promise<Output[] | undefined> {
-		const getter = await Getter.build(this.#url, this.#extractor);
+	async search(): Promise<Output[]> {
+		return await this.innerSearch(this.#url);
+	}
+
+	async scraper(): Promise<EstadisticasTerritorialesScraper | undefined> {
+		const getter = await Getter.build(this.#url, this.extractor);
 		const html = getter.html;
 		if (!html) return;
-		const scraper = new Scraper(html, this.#url);
-		return scraper.getETData();
-	}
-
-	#checkUrl(url: string): string {
-		const BASE_URL = "https://www.bcn.cl/siit/estadisticasterritoriales/";
-		const baseUrl = new URL(BASE_URL);
-		const inputUrl = new URL(url);
-		if (baseUrl.origin !== inputUrl.origin)
-			throw new Error("Input url does not match BCN url");
-		return url;
+		return new EstadisticasTerritorialesScraper(html, this.#url);
 	}
 }
 
