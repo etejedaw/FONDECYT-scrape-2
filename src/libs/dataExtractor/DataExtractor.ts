@@ -26,13 +26,16 @@ abstract class DataExtractor {
 		const baseUrl = new URL(this.baseUrl);
 		const inputUrl = new URL(url);
 		if (baseUrl.origin !== inputUrl.origin)
-			throw new Error(`Input url does not match with ${this.#baseUrl} url`);
+			throw new Error(
+				`Input url ${url} does not match with ${this.#baseUrl} url`
+			);
 	}
 
 	emptyHTML(url: string): Output[] {
 		return [
 			{
-				title: "Cant extract HTML. Please update Scraper Method",
+				title:
+					"Cant extract HTML. Please update Scraper Method or check if the url has data",
 				link: url,
 				format: "error"
 			}
