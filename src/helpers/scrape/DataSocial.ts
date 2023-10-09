@@ -15,7 +15,6 @@ class DataSocial extends ScrapeBase<DataType> {
 		const dataSocial = this.url.map(url => new DS(url, this.extractor));
 		const promises = dataSocial.map(data => data.search());
 		const data = await Promise.all(promises);
-		console.log(data);
 		return data.flat().filter(Boolean);
 	}
 
