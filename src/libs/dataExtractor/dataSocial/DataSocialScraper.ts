@@ -1,22 +1,22 @@
 import cheerio from "cheerio";
 import Output from "../Output";
+import Scraper from "../Scraper";
 
-class Scraper {
-	readonly #html: string;
-
-	constructor(html: string) {
-		this.#html = html;
+class DataSocialScraper extends Scraper {
+	constructor(html: string, baseUrl: string) {
+		super(html, baseUrl);
 	}
 
 	getData(): Output[] {
-		const $ = cheerio.load(this.#html);
+		const $ = cheerio.load(this.htmlCode);
 		return $("nav .nav .text-white a")
 			.map((idx, elem) => {
-				const title = $(elem).attr("title") || "";
-				const link = $(elem).attr("href") || "";
+				const title = $(elem).attr("title")?.trim() || "";
+				const outputLink = $(elem).attr("href")?.trim() || "";
 				const output: Output = {
 					title,
-					link,
+					link: this.baseUrl,
+					outputLink,
 					format: "xlsx"
 				};
 				return output;
@@ -30,4 +30,4 @@ class Scraper {
 	}
 }
 
-export default Scraper;
+export default DataSocialScraper;

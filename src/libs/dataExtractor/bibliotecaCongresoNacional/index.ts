@@ -1,3 +1,4 @@
-import BCNFactory from "./BCNFactory";
+import EstadisticasTerritorialesFactory from "./EstadisticasTerritorialesFactory";
+import ReporteComunalFactory from "./ReporteComunalFactory";
 
-export { BCNFactory };
+export { EstadisticasTerritorialesFactory, ReporteComunalFactory };
