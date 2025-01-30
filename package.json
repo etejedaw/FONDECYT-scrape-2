@@ -2,17 +2,16 @@
   "name": "tesis",
   "version": "0.0.0",
   "description": "Resiliencia comunitaria ante tsunami en la costa chilena: Modelando escenarios multidimensionales con una aproximación participativa",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "build": "tsc -p .",
-    "start": "ts-node src/app.ts",
-    "start:prod": "node dist/src/app.js",
+    "start": "node dist/app.js",
     "dev": "nodemon -w './**/*.ts' --exec 'ts-node' src/app.ts",
     "test": "jest",
     "test:watch": "jest --watch",
     "lint": "eslint . --ext .ts",
     "lint:fix": "lint --fix",
-    "prettier": "prettier --write src"
+    "prettier": "prettier --write src/**/*.ts"
   },
   "repository": {
     "type": "git",
