@@ -1,12 +1,12 @@
 import { RequestPromise } from "../../../src/libs/htmlExtractor";
-import { ObservatorioSocialOld } from "../../../src/helpers/scrape";
+import { ObservatorioSocial } from "../../../src/helpers/scrape";
 
 describe("Any scrape in ObservatorioSocialOld must have", () => {
 	const requestPromise = new RequestPromise();
 	const url =
 		"https://observatorio.ministeriodesarrollosocial.gob.cl/encuesta-casen-2017";
 
-	const observatorioSocial = new ObservatorioSocialOld(url, requestPromise);
+	const observatorioSocial = new ObservatorioSocial(url, requestPromise);
 
 	it("At least one array of codes to find the data to download", async () => {
 		const codes = await observatorioSocial.getAll();
