@@ -12,9 +12,9 @@
         "project": "tsconfig.json"
     },
     "rules": {
-        "@typescript-eslint/strict-boolean-expressions": "warn",
+        "@typescript-eslint/strict-boolean-expressions": "off",
         "@typescript-eslint/prefer-nullish-coalescing": "warn",
         "@typescript-eslint/promise-function-async": "warn",
-        "@typescript-eslint/no-useless-constructor": "warn"
+        "@typescript-eslint/no-useless-constructor": "off"
     }
 }
