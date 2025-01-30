@@ -5,7 +5,7 @@ import {
 } from "../../libs/dataExtractor/bibliotecaCongresoNacional";
 import { Getter, HtmlExtractor } from "../../libs/htmlExtractor";
 
-class BibliotecaCongresoNacional {
+export class BibliotecaCongresoNacional {
 	readonly #url: string;
 	readonly #extractor: HtmlExtractor;
 	readonly #factory: BibliotecaCongresoNacionalFactory;
@@ -51,5 +51,3 @@ class BibliotecaCongresoNacional {
 }
 
 type FactoryTypes = "estadistica_territorial" | "reporte_comunal";
-
-export default BibliotecaCongresoNacional;

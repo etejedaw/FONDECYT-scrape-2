@@ -6,7 +6,7 @@ import {
 import cheerio from "cheerio";
 import { ArrayData, Data, ScrapeBase } from "./ScrapeBase";
 
-class EmergenciaYDesastres extends ScrapeBase<DataType> {
+export class EmergenciaYDesastres extends ScrapeBase<DataType> {
 	constructor(url: string[] | string, extractor: HtmlExtractor) {
 		super(url, extractor);
 	}
@@ -70,5 +70,3 @@ interface DataType {
 		city: string;
 	};
 }
-
-export default EmergenciaYDesastres;

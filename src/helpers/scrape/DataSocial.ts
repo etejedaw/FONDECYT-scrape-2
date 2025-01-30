@@ -2,7 +2,7 @@ import { Getter, HtmlExtractor } from "../../libs/htmlExtractor";
 import { DataSocial as DS, Output } from "../../libs/dataExtractor";
 import { ArrayData, Data, ScrapeBase } from "./ScrapeBase";
 
-class DataSocial extends ScrapeBase<DataType> {
+export class DataSocial extends ScrapeBase<DataType> {
 	constructor(url: string[] | string, extractor: HtmlExtractor) {
 		super(url, extractor);
 	}
@@ -33,8 +33,6 @@ class DataSocial extends ScrapeBase<DataType> {
 		};
 	}
 }
-
-export default DataSocial;
 
 interface DataType {
 	message: string;

@@ -4,7 +4,7 @@ import * as path from "path";
 import { deleteFile, downloadFile } from "../downloadFile.helpers";
 import XLSX from "xlsx";
 
-class ObservatorioSocial {
+export class ObservatorioSocial {
 	readonly #url: string[];
 	readonly #extractor: HtmlExtractor;
 
@@ -78,5 +78,3 @@ class ObservatorioSocial {
 		return String(timestamp);
 	}
 }
-
-export default ObservatorioSocial;
