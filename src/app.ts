@@ -1,11 +1,12 @@
 import { environment } from "./config/environment";
 import { mongodb } from "./config/database";
 import { server } from "./api/server";
-import { ScraperFactory } from "./core/scraper-factory";
+import { ScraperFactory } from "./core/ScraperFactory";
 import { EmergenciaDesastresScraper } from "./modules/emergencias-desastres/EmergenciaDesastreScraper";
 
 async function main() {
-	ScraperFactory.register(new EmergenciaDesastresScraper());
+	const scraperFactory = ScraperFactory.getInstance();
+	scraperFactory.register(new EmergenciaDesastresScraper());
 
 	server(environment.PORT);
 	console.log(`Server connected on port ${environment.PORT}`);
