@@ -1,5 +1,5 @@
 import { Router } from "express";
-import emergenciaDesastres from "./emergencia-desastres";
+import emergenciaDesastres from "./emergencia-desastres.route";
 
 const router = Router();
 
