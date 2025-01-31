@@ -1,18 +1,44 @@
 import { ModuleConfig } from "./utils/indicator-builder";
 
-// TODO: Ver cómo se integra la clase abstracta en conjunto
-// con los adaptadores. Ya que cada indicador tiene su propia
-// forma de extraer la data (html, json, etc). Además, cada html
-// puede tener su propia forma de hacer srapping
 export abstract class ScrapeBase {
-	readonly config: ModuleConfig;
-	readonly name: string;
+	readonly #moduleConfig: ModuleConfig;
+	readonly #moduleName: string;
 
-	constructor(moduleName: string, config: ModuleConfig) {
-		this.name = moduleName;
-		this.config = config;
+	constructor(moduleName: string, moduleConfig: ModuleConfig) {
+		this.#moduleName = moduleName;
+		this.#moduleConfig = moduleConfig;
 	}
 
-	abstract fetchHtml(url: string): Promise<string>;
-	abstract extractData(html: string): Promise<unknown>;
+	getIndicators() {
+		return Object.keys(this.#moduleConfig);
+	}
+
+	getName() {
+		return this.#moduleName;
+	}
+
+	getIndicatorDescription(indicator: string) {
+		return this.#moduleConfig[indicator].description;
+	}
+
+	getIndicatorUrl(indicator: string) {
+		return this.#moduleConfig[indicator].url;
+	}
+
+	#getFetchAdapter(indicator: string) {
+		return this.#moduleConfig[indicator].fetchAdapter;
+	}
+
+	#getParseAdapter(indicator: string) {
+		return this.#moduleConfig[indicator].parseAdapter;
+	}
+
+	async init(indicator: string) {
+		const url = this.getIndicatorUrl(indicator);
+		const fetchAdapter = this.#getFetchAdapter(indicator);
+		const fetch = await fetchAdapter.fetch(url);
+
+		const parseAdapter = this.#getParseAdapter(indicator);
+		return parseAdapter.extract(fetch);
+	}
 }
