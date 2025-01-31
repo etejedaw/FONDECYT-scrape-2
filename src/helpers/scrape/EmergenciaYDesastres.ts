@@ -4,45 +4,39 @@ import {
 	EmergenciaYDesastres as EyDData
 } from "../../libs/dataExtractor";
 import cheerio from "cheerio";
-import ScrapeData from "./ScrapeData";
+import { ArrayData, Data, ScrapeBase } from "./ScrapeBase";
 
-class EmergenciaYDesastres {
-	readonly #url: string[];
-	readonly #extractor: HtmlExtractor;
-
+export class EmergenciaYDesastres extends ScrapeBase<DataType> {
 	constructor(url: string[] | string, extractor: HtmlExtractor) {
-		this.#url = this.#normalizeUrl(url);
-		this.#extractor = extractor;
+		super(url, extractor);
 	}
 
-	async init(): Promise<EmergenciaYDesastresData[]> {
-		const data = await this.#getData();
-		const cleanData = data.filter(Boolean);
-		if (cleanData.length === 0) return [];
-		const promises = cleanData.map(data => this.#scrape(data));
-		const extractData = await Promise.all(promises);
-		if (extractData.filter(Boolean).length === 0) return [];
-		return extractData.filter(Boolean);
+	async init(): ArrayData<DataType> {
+		return await this.innerInit();
 	}
 
-	async #getData(): Promise<Array<Output | undefined>> {
-		const emergenciaYDesastres = this.#url.map(
-			url => new EyDData(url, this.#extractor)
+	async getData(): Promise<Output[]> {
+		const emergenciaYDesastres = this.url.map(
+			url => new EyDData(url, this.extractor)
 		);
-		const promises = emergenciaYDesastres.map(data => data.search());
+		const promises = emergenciaYDesastres.map(
+			async data => await data.search()
+		);
 		const data = await Promise.all(promises);
-		return data.flat();
+		return data.flat().filter(Boolean);
 	}
 
-	async #scrape(output: Output): Promise<EmergenciaYDesastresData | undefined> {
-		const getter = await Getter.build(output.link, this.#extractor);
+	async scrape(output: Output): Data<DataType> {
+		const getter = await Getter.build(output.link, this.extractor);
+
 		const html = getter.html;
-		if (!html) return;
+		if (!html) return { metadata: output };
+
 		const $ = cheerio.load(html);
-		const data: dataType[] = $(".back-fechas .item .card")
+		const data: DataType[] = $(".back-fechas .item .card")
 			.map((idx, elem) => {
 				const dateElem = $(elem).find(".caja-date");
-				const date: dataType["date"] = {
+				const date: DataType["date"] = {
 					day: Number(
 						$(dateElem).find(".dat_day").text().trim().split("\t")[0]
 					),
@@ -50,22 +44,22 @@ class EmergenciaYDesastres {
 					year: Number($(dateElem).find(".dat_year").text().trim())
 				};
 				const placeElem = $(elem).find(".card-body");
-				const place: dataType["place"] = {
+				const place: DataType["place"] = {
 					type: $(placeElem).find(".card-title a").text().trim(),
 					city: $(placeElem).find(".card-title.pb-3").text().trim()
 				};
 				return { date, place };
 			})
 			.get();
-		return { data, output };
-	}
 
-	#normalizeUrl(url: string[] | string): string[] {
-		return typeof url === "string" ? [url] : url;
+		return {
+			scrape: data,
+			metadata: output
+		};
 	}
 }
 
-interface dataType {
+interface DataType {
 	date: {
 		day: number;
 		month: string;
@@ -76,9 +70,3 @@ interface dataType {
 		city: string;
 	};
 }
-interface EmergenciaYDesastresData extends ScrapeData<dataType> {
-	data: dataType[];
-	output: Output;
-}
-
-export default EmergenciaYDesastres;

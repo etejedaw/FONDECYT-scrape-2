@@ -2,7 +2,7 @@ import {
 	RequestPromise,
 	Puppeteer,
 	Getter
-} from "../../../src/libs/htmlExtractor";
+} from "../../../../src/libs/htmlExtractor";
 
 const regex = /<html>(.*?)<\/html>/gs;
 

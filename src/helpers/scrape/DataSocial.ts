@@ -1,33 +1,39 @@
-import { HtmlExtractor } from "../../libs/htmlExtractor";
-import { DataSocial as DS } from "../../libs/dataExtractor";
+import { Getter, HtmlExtractor } from "../../libs/htmlExtractor";
+import { DataSocial as DS, Output } from "../../libs/dataExtractor";
+import { ArrayData, Data, ScrapeBase } from "./ScrapeBase";
 
-class DataSocial {
-	readonly #url: string[];
-	readonly #extractor: HtmlExtractor;
-
+export class DataSocial extends ScrapeBase<DataType> {
 	constructor(url: string[] | string, extractor: HtmlExtractor) {
-		this.#url = this.#normalizeUrl(url);
-		this.#extractor = extractor;
+		super(url, extractor);
 	}
 
-	async init(): Promise<any> {
-		const data = await this.#getData();
-		return {
-			data,
-			messsage: "DataSocial no implementado debido a lo cambiante que es su web"
-		};
+	async init(): ArrayData<DataType> {
+		return await this.innerInit();
 	}
 
-	async #getData(): Promise<any> {
-		const dataSocial = this.#url.map(url => new DS(url, this.#extractor));
+	async getData(): Promise<Output[]> {
+		const dataSocial = this.url.map(url => new DS(url, this.extractor));
 		const promises = dataSocial.map(data => data.search());
 		const data = await Promise.all(promises);
-		return data;
+		return data.flat().filter(Boolean);
 	}
 
-	#normalizeUrl(url: string[] | string): string[] {
-		return typeof url === "string" ? [url] : url;
+	async scrape(output: Output): Data<DataType> {
+		// TODO: Esta sección debe ser implementada nuevamente, una vez que el
+		//  scrape sea actualizado
+
+		const getter = await Getter.build(output.link, this.extractor);
+
+		const html = getter.html;
+		if (!html) return { metadata: output };
+
+		return {
+			scrape: [],
+			metadata: output
+		};
 	}
 }
 
-export default DataSocial;
+interface DataType {
+	message: string;
+}

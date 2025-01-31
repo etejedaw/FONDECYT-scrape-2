@@ -25,8 +25,10 @@ async function main(): Promise<void> {
 	} catch (error) {
 		if (error instanceof ConnectionError)
 			winston.error(error.name, error.detail);
-		if (error instanceof AuthError) winston.error(error.name, error.detail);
-		else console.log(error);
+		else if (error instanceof AuthError)
+			winston.error(error.name, error.detail);
+		else if (error instanceof Error) winston.error(error.name, error.message);
+		else winston.error("Unexpected Error", JSON.stringify(error));
 	}
 }
 

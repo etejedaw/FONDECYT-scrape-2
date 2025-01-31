@@ -8,6 +8,8 @@ class DataSocialScraper extends Scraper {
 	}
 
 	getData(): Output[] {
+		// TODO: Esta sección debe ser implementada nuevamente, ya que debido a los constantes
+		//  cambios de la página, la versión actual de scrape está obsoleta
 		const $ = cheerio.load(this.htmlCode);
 		return $("nav .nav .text-white a")
 			.map((idx, elem) => {
