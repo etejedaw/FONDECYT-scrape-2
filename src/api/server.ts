@@ -1,6 +1,8 @@
 import express from "express";
 import morgan from "morgan";
-import { environment } from "./config/environment";
+import router from "./routes";
+
+import { environment } from "../config/environment";
 
 export function server(port: number): void {
 	const nodeEnv = environment.NODE_ENV;
@@ -9,6 +11,7 @@ export function server(port: number): void {
 
 	app.use(morgan(nodeEnv));
 	app.use(express.json());
+	app.use(router);
 
 	app.listen(port);
 }
