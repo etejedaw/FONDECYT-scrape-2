@@ -1,4 +1,4 @@
-import { ScrapeBase } from "./scrape-base";
+import { ScrapeBase } from "./ScrapeBase";
 
 export class ScraperFactory {
 	#modules: Record<string, ScrapeBase>;

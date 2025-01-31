@@ -35,6 +35,7 @@ export abstract class ScrapeBase {
 
 	async init(indicator: string) {
 		const url = this.getIndicatorUrl(indicator);
+
 		const fetchAdapter = this.#getFetchAdapter(indicator);
 		const fetch = await fetchAdapter.fetch(url);
 
