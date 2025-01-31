@@ -1,5 +1,5 @@
 import { ScrapeBase } from "../../core/scrape-base";
-import { EMERGENCIA_DESASTRES_CONFIG } from "./config";
+import { EMERGENCIA_DESASTRES_CONFIG } from "./Config";
 
 export class EmergenciaDesastresScraper extends ScrapeBase {
 	constructor() {
