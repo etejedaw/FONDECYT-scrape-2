@@ -1,16 +1,18 @@
 import { ScrapeBase } from "./scrape-base";
-import { ModuleConfig } from "./utils/indicator-builder";
 
-// TODO: Ver otra forma para que no sea una clase solo con métodos estáticos
-// Singleton posible solución?
 export class ScraperFactory {
-	static #modules = {} as Record<string, ModuleConfig>;
+	static #modules = {} as Record<string, ScrapeBase>;
 
 	static register(scraper: ScrapeBase) {
-		this.#modules[scraper.name] = scraper.config;
+		const scraperName = scraper.getName();
+		this.#modules[scraperName] = scraper;
 	}
 
 	static getIndicators(module: string) {
-		return Object.keys(this.#modules[module]);
+		return this.#modules[module].getIndicators();
+	}
+
+	static get(module: string) {
+		return this.#modules[module];
 	}
 }
