@@ -3,7 +3,7 @@ import { DateParserAdapter } from "./adapters/DateParser";
 import {
 	IndicatorBuilder,
 	ModuleConfig
-} from "../../core/utils/indicator-builder";
+} from "../../core/utils/IndicatorBuilder";
 
 export const EMERGENCIA_DESASTRES_CONFIG: ModuleConfig = {
 	"simulacros-2021": new IndicatorBuilder()

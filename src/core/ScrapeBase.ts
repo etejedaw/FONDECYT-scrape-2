@@ -1,4 +1,4 @@
-import { ModuleConfig } from "./utils/indicator-builder";
+import { ModuleConfig } from "./utils/IndicatorBuilder";
 
 export abstract class ScrapeBase {
 	readonly #moduleConfig: ModuleConfig;

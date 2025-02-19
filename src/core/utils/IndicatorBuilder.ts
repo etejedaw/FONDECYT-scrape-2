@@ -3,11 +3,7 @@ import { ParseAdapter } from "../adapters/parse-adapter/ParseAdapter";
 import { FetchAdapter } from "../adapters/fetch-adapter/FetchAdapter";
 
 export class IndicatorBuilder {
-	#config: Indicator;
-
-	constructor() {
-		this.#config = {} as Indicator;
-	}
+	#config: Indicator = {} as Indicator;
 
 	setName(name: string) {
 		this.#config.name = name;
